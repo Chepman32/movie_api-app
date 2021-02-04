@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "ymdb-app",
-    "slug": "ymdb-app",
+    "name": "Movie-browser",
+    "slug": "movie-browser",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -17,9 +17,16 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.movie-browser.info-app",
+      "buildNumber": "1.0.0",
       "supportsTablet": true
     },
     "android": {
+      "package": "com.moviebrowser.infoapp",
+      "versionCode": 1,
+      "permissions": [
+        "WRITE_EXTERNAL_STORAGE"
+      ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
