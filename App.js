@@ -2,10 +2,8 @@
 // https://aboutreact.com/react-native-bottom-navigation/
 
 import 'react-native-gesture-handler';
-import AppLoading from 'expo-app-loading';
 import { Search } from "./Search"
 import Spinner from './Spinner';
-import { MovieCard } from './MovieCard';
 import { MovieInfo } from './MovieInfo';
 import * as React from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -13,22 +11,18 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Main } from './Main';
+import AppIntro from './AppIntro';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-
 function HomeStack() {
   return (
     <Stack.Navigator
-      initialRouteName="Home"
+      initialRouteName="Main"
       screenOptions={{
         headerTitleStyle: { fontWeight: 'bold' },
       }}>
-      <Stack.Screen
-        name="Home"
-        component={Main}
-        options={{ title: 'Home Page' }}
-      />
+        <Stack.Screen name="AppIntro" component={AppIntro} />
       <Stack.Screen name="Main" component={Main} options={{
         title: "Trending now"
       }} />
@@ -39,7 +33,9 @@ function HomeStack() {
         headerTintColor: "#fff"
 
       }} />
-      <Stack.Screen name="Search" component={Search} />
+      <Stack.Screen name="Search" component={Search} options={{
+        title: "Search"
+      }} />
     </Stack.Navigator>
   );
 }
@@ -56,6 +52,12 @@ function SettingsStack() {
         component={Search}
         options={{ title: 'Setting Page' }}
       />
+      <Stack.Screen name="MovieInfo" component={MovieInfo} options={{
+        headerBackTitleVisible: false,
+        headerLeft: null,
+        headerTintColor: "#fff"
+
+      }} />
     </Stack.Navigator>
   );
 }
@@ -68,6 +70,10 @@ function App() {
         tabBarOptions={{
           activeTintColor: '#20BEF1',
         }}>
+          <Tab.Screen
+          name="AppIntro"
+          component={AppIntro}
+              />
         <Tab.Screen
           name="HomeStack"
           component={HomeStack}

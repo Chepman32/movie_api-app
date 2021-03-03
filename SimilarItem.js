@@ -32,12 +32,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#000",
   },
-  title: {
-    marginVertical: "40%",
-    fontSize: 30,
-    fontWeight: "bold",
-    color: "#fff"
-  },
   img: {
     width: "100%",
     height: "50%"

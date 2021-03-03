@@ -2,11 +2,9 @@ import { useNavigation } from "@react-navigation/native"
 import axios from "axios"
 import React from "react"
 import { useEffect } from "react"
-import Dropdown from "./Dropdown"
-import { Picker, StyleSheet, Text, View } from "react-native"
+import { StyleSheet, Text, View } from "react-native"
 import { useState } from "react/cjs/react.development"
-import { LANGUAGES_REQUEST, MAX_WIDTH } from "./constants"
-import { Languages } from "./Languages"
+import { LANGUAGES_REQUEST } from "./constants"
 export const Settings = ({route}) => {
   useEffect(() => {
     getLanguages()

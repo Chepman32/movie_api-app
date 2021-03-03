@@ -1,8 +1,7 @@
 import { useNavigation } from "@react-navigation/native"
-import React from "react"
+import React, { useState } from "react"
 import { ImageBackground, StyleSheet, Text } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
-import { useState } from "react/cjs/react.development"
 import { MAX_HEIGHT, MAX_WIDTH } from "./constants"
 import Spinner from "./Spinner"
 export const MovieCard = ({ id, title, release_date, overview, imgUrl }) => {

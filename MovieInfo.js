@@ -1,25 +1,21 @@
-import { useNavigation, useRoute } from "@react-navigation/native"
+import { useNavigation } from "@react-navigation/native"
 import axios from "axios"
-import React, { useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { Image, Linking, StyleSheet, Text, View } from "react-native"
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
-import { useState } from "react/cjs/react.development"
 import { AdMobComponent } from "./classAdMobComponent"
 import { CompanyItem } from "./CompanyItem"
 import { API_KEY, MAX_HEIGHT, MAX_WIDTH } from "./constants"
 import { SimilarItem } from "./SimilarItem"
 
-export const MovieInfo = ({ route, navigationRef }) => {
-  const getData = async() => {
-    const data = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`)
-  }
+export const MovieInfo = ({ route }) => {
 
   const [companies, setCompanies] = useState([])
   const [genres, setGenres] = useState([])
   const [countries, setCountries] = useState([])
   const [similar, setSimilar] = useState([])
   const [budget, setBudget] = useState("")
-  const [img, setImg] = useState("")
+  const [] = useState("")
   const [homepage, setHomepage] = useState("")
   const id = route.params.id
   const title = route.params.title
@@ -37,7 +33,6 @@ export const MovieInfo = ({ route, navigationRef }) => {
       )
     })
     getBudget()
-    getData()
     getCountries()
     getSimilar()
     getHomepage()
@@ -46,48 +41,79 @@ export const MovieInfo = ({ route, navigationRef }) => {
   }, [])
 
   const getBudget = async() => {
-    const data = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`)
+    try {
+      const data = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`)
     setBudget(data.data.budget)
+    }
+    catch(e) {
+      console.log(e)
+    }
   }
   const getHomepage = async() => {
-    const data = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`)
+    try {
+      const data = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`)
     setHomepage(data.data.homepage)
+    }
+    catch(e) {
+      console.log(e)
+    }
   }
 
   const getCountries = async() => {
-    const data = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`)
+    try {
+      const data = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`)
     setCountries(data.data.production_countries.map(
       c => <Text key={c.name} style={styles.countries} >&bull; {c.name} </Text>
     ))
+    }
+    catch(e) {
+      console.log(e)
+    }
   }
   const getGenres = async() => {
-    const data = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`)
+    try {
+      const data = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`)
     setGenres(data.data.genres.map(
       c => <Text key={c.name} style={styles.countries} >&bull; {c.name} </Text>
-    ))
+      ))
+    }
+    catch(e) {
+      console.log(e)
+    }
+    
   }
   
   const getCompanies = async() => {
-    const data = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`)
+    try {
+      const data = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`)
     setCompanies(data.data.production_companies.map(
       c => <CompanyItem key={c.name} id={c.id} name={c.name} logo={c.logo_path} country={c.origin_country}/>
-    ))
+      ))
+    }
+    catch(e) {
+      console.log(e)
+    }
   }
 
   const getSimilar = async () => {
-    const res = await axios.get(
-      `https://api.themoviedb.org/3/movie/${id}/similar?api_key=${API_KEY}&language=en-US&page=1`
-      )
-      setSimilar(res.data.results.map(
-        s=> <SimilarItem
-        id={s.id}
-        key={Math.random().toString()}
-         title={s.title} 
-         overview={s.overview} 
-         imgUrl={s.poster_path}
-         release_date={s.release_date}
-         />
-      ))
+    try {
+      const res = await axios.get(
+        `https://api.themoviedb.org/3/movie/${id}/similar?api_key=${API_KEY}&language=en-US`
+        )
+        setSimilar(res.data.results.map(
+          s=> <SimilarItem
+          id={s.id}
+          key={Math.random().toString()}
+           title={s.title} 
+           overview={s.overview} 
+           imgUrl={s.poster_path}
+           release_date={s.release_date}
+           />
+        ))
+    }
+    catch(e) {
+      console.log(e)
+    }
   }
 
   const navigation = useNavigation()
@@ -99,10 +125,15 @@ export const MovieInfo = ({ route, navigationRef }) => {
       </TouchableOpacity>
       <ScrollView>
       <Text style={styles.title} >{title} </Text>
-      <Text style={styles.orange} >Release date:
+      {
+        release_date &&
+        <>
+        <Text style={styles.orange} >Release date:
         &nbsp;
       </Text>
       <Text>{release_date}</Text>
+        </>
+      }
       <Text style={styles.overview} >{overview} </Text>
       { countries.length > 0 && <Text style={styles.orange} >Production countries:</Text> }
       {countries}
